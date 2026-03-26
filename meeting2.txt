@@ -1,0 +1,5 @@
+Client: Our QA team is doing manual testing.
+Testing takes too much time before release.
+We want automation for faster deployment.
+Current system is legacy software.
+We want cloud based solution.
