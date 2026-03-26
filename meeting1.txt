@@ -1,0 +1,6 @@
+Client: We are using Excel sheets for reporting.
+The process is manual and very slow.
+We want automation and dashboard.
+System should scale in future.
+We are open to cloud deployment.
+Currently some scripts are written in Python.
