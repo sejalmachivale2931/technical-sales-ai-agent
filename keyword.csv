@@ -1,0 +1,31 @@
+keyword,pain_points,tech_stack,outcome,solution
+excel,Manual reporting using Excel,Excel,,Python automation + Power BI dashboard
+manual,Manual process causing delay,,,Process automation tools
+slow,Slow system performance,,,Performance optimization
+dashboard,,,Interactive dashboard,Power BI / Tableau dashboard
+cloud,,,Cloud scalability,AWS / Azure cloud
+python,,Python,,Python automation scripts
+testing,Manual testing effort,,,Automated testing tools
+automation,,,Process automation,RPA / Python automation
+legacy,Legacy system limitations,,,Modern low-code platform
+performance,Slow system performance,,,System optimization tools
+ai,,,AI automation,Machine learning solution
+database,Database performance issues,SQL,,Database optimization
+reporting,Manual reporting effort,,,Automated reporting solution
+real time,,,Real-time analytics,Streaming data pipeline
+migration,Legacy system dependency,,,Cloud migration strategy
+deployment,Slow deployment process,,,CI/CD pipeline
+analytics,,,Business insights,Data visualization dashboard
+kpi,,,Performance tracking,Dashboard solution
+storage,,,Scalable storage,Cloud storage solution
+optimization,Process inefficiency,,,AI optimization tools
+data entry,Manual data entry errors,,,Automation scripts
+validation,Manual validation effort,,,Automated validation tools
+infrastructure,,,Scalable infrastructure,Cloud architecture
+bottleneck,Process bottleneck,,,Workflow automation
+inefficient,System inefficiency,,,Performance tuning
+centralized,Data scattered,,,Centralized dashboard
+scripts,,,Automation scripts,Python scripting solution
+maintenance,High maintenance effort,,,Modern platform upgrade
+errors,Human errors,,,Automation tools
+scalable,System not scalable,,,Cloud scalable architecture
