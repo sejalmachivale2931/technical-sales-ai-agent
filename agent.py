@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-keywords_df = pd.read_csv("keyword.csv")
+keywords_df = pd.read_csv("keywords.csv")
 
 
 def read_meeting(file_name):
@@ -20,16 +20,14 @@ def analyze_text(text):
         "pain_points": matched_rows["pain_points"].dropna().unique(),
         "tech_stack": matched_rows["tech_stack"].dropna().unique(),
         "outcome": matched_rows["outcome"].dropna().unique(),
-        "solution": matched_rows["solution"].dropna().unique()
+        "solution": matched_rows["solution"].dropna().unique(),
+        "implementation_steps": matched_rows["implementation_step"].dropna().unique()
     }
-
 
 
 meeting_text = read_meeting("meeting1.txt")
 
-
 result = analyze_text(meeting_text)
-
 
 
 def format_list(title, items):
@@ -42,7 +40,7 @@ def format_list(title, items):
     return f"{title}:\n{formatted}\n"
 
 
-# structured output
+
 output_text = f"""
 ================ AI SOLUTION DESIGN ================
 
@@ -57,13 +55,7 @@ CLIENT REQUIREMENT:
 
 {format_list("SUGGESTED SOLUTION", result["solution"])}
 
-IMPLEMENTATION STEPS:
- 1. Requirement Analysis
- 2. Solution Mapping using dataset
- 3. Architecture Design
- 4. Automation Development
- 5. Testing
- 6. Deployment
+{format_list("IMPLEMENTATION STEPS", result["implementation_steps"])}
 
 ====================================================
 """
@@ -73,6 +65,7 @@ IMPLEMENTATION STEPS:
 with open("solution_design.txt", "w", encoding="utf-8") as f:
     f.write(output_text)
 
+
 print(output_text)
 
-print("result saved to solution_design.txt ")
+print("\nresult saved to solution_design.txt")
