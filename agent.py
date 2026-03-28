@@ -1,120 +1,78 @@
-# Technical Sales Engineer AI Agent
-
-# Step 1: read transcript
-def read_transcript(filename):
-    with open(filename, "r", encoding="utf-8") as file:
-        return file.read().lower()
+import pandas as pd
 
 
-# Step 2: AI analysis logic
-def analyze_transcript(text):
+keywords_df = pd.read_csv("keyword.csv")
 
-    pain_points = set()
-    tech_stack = set()
-    outcome = set()
-    solution = set()
 
-    # rule based mapping (AI logic)
-    rules = {
+def read_meeting(file_name):
 
-        "excel": {
-            "tech_stack": ["Excel"],
-            "pain_points": ["Manual reporting using Excel"],
-            "solution": ["Python automation + Power BI dashboard"]
-        },
+    with open(file_name, "r", encoding="utf-8") as f:
+        return f.read().lower()
 
-        "manual": {
-            "pain_points": ["Manual process causing delay"]
-        },
 
-        "slow": {
-            "pain_points": ["Slow system performance"]
-        },
+def analyze_text(text):
 
-        "dashboard": {
-            "outcome": ["Interactive dashboard"]
-        },
+    matched_rows = keywords_df[
+        keywords_df["keyword"].apply(lambda k: k.lower() in text)
+    ]
 
-        "cloud": {
-            "outcome": ["Cloud scalability"],
-            "solution": ["AWS / Azure cloud"]
-        },
-
-        "python": {
-            "tech_stack": ["Python"]
-        },
-
-        "testing": {
-            "pain_points": ["Manual testing effort"],
-            "solution": ["Automated testing tools"]
-        },
-
-        "automation": {
-            "outcome": ["Process automation"]
-        },
-
-        "legacy": {
-            "pain_points": ["Legacy system limitations"],
-            "solution": ["Modern low-code platform"]
-        }
+    return {
+        "pain_points": matched_rows["pain_points"].dropna().unique(),
+        "tech_stack": matched_rows["tech_stack"].dropna().unique(),
+        "outcome": matched_rows["outcome"].dropna().unique(),
+        "solution": matched_rows["solution"].dropna().unique()
     }
 
-    # apply AI rules
-    for keyword, value in rules.items():
-
-        if keyword in text:
-
-            pain_points.update(value.get("pain_points", []))
-            tech_stack.update(value.get("tech_stack", []))
-            outcome.update(value.get("outcome", []))
-            solution.update(value.get("solution", []))
-
-    # default solution
-    if not solution:
-        solution.add("Custom AI-based solution")
-
-    return format_output(pain_points, tech_stack, outcome, solution)
 
 
-# Step 3: format output document
-def format_output(pain_points, tech_stack, outcome, solution):
+meeting_text = read_meeting("meeting1.txt")
 
-    result = f"""
-AI Solution Design Document
 
-Pain Points:
-- {chr(10).join(pain_points)}
+result = analyze_text(meeting_text)
 
-Current Tech Stack:
-- {chr(10).join(tech_stack)}
 
-Desired Outcome:
-- {chr(10).join(outcome)}
 
-Suggested Solution Architecture:
-- {chr(10).join(solution)}
+def format_list(title, items):
 
-Implementation Steps:
-1. Requirement Analysis
-2. Architecture Design
-3. Development
-4. Testing
-5. Deployment
+    if len(items) == 0:
+        return f"{title}:\n - Not identified\n"
+
+    formatted = "\n".join([f" - {item}" for item in items])
+
+    return f"{title}:\n{formatted}\n"
+
+
+# structured output
+output_text = f"""
+================ AI SOLUTION DESIGN ================
+
+CLIENT REQUIREMENT:
+{meeting_text}
+
+{format_list("PAIN POINTS", result["pain_points"])}
+
+{format_list("CURRENT TECH STACK", result["tech_stack"])}
+
+{format_list("DESIRED OUTCOME", result["outcome"])}
+
+{format_list("SUGGESTED SOLUTION", result["solution"])}
+
+IMPLEMENTATION STEPS:
+ 1. Requirement Analysis
+ 2. Solution Mapping using dataset
+ 3. Architecture Design
+ 4. Automation Development
+ 5. Testing
+ 6. Deployment
+
+====================================================
 """
 
-    return result
 
 
-# Step 4: run complete AI agent
-transcript = read_transcript("meeting2.txt")
-
-response = analyze_transcript(transcript)
-
-print(response)
-
-
-# Step 5: save output file
 with open("solution_design.txt", "w", encoding="utf-8") as f:
-    f.write(response)
+    f.write(output_text)
 
-print("\nFile saved: solution_design.txt")
+print(output_text)
+
+print("result saved to solution_design.txt ")
