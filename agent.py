@@ -1,69 +1,98 @@
 # Technical Sales Engineer AI Agent
 
-# read transcript file
+# Step 1: read transcript
 def read_transcript(filename):
     with open(filename, "r", encoding="utf-8") as file:
         return file.read().lower()
 
 
+# Step 2: AI analysis logic
 def analyze_transcript(text):
 
-    pain_points = []
-    tech_stack = []
-    outcome = []
-    solution = []
+    pain_points = set()
+    tech_stack = set()
+    outcome = set()
+    solution = set()
 
-    # logic rules
+    # rule based mapping (AI logic)
+    rules = {
 
-    if "excel" in text:
-        tech_stack.append("Excel")
-        pain_points.append("Manual reporting using Excel")
-        solution.append("Python automation + Power BI dashboard")
+        "excel": {
+            "tech_stack": ["Excel"],
+            "pain_points": ["Manual reporting using Excel"],
+            "solution": ["Python automation + Power BI dashboard"]
+        },
 
-    if "manual" in text:
-        pain_points.append("Manual process causing delay")
+        "manual": {
+            "pain_points": ["Manual process causing delay"]
+        },
 
-    if "slow" in text:
-        pain_points.append("Slow system performance")
+        "slow": {
+            "pain_points": ["Slow system performance"]
+        },
 
-    if "dashboard" in text:
-        outcome.append("Interactive dashboard")
+        "dashboard": {
+            "outcome": ["Interactive dashboard"]
+        },
 
-    if "cloud" in text:
-        outcome.append("Cloud scalability")
-        solution.append("AWS / Azure cloud")
+        "cloud": {
+            "outcome": ["Cloud scalability"],
+            "solution": ["AWS / Azure cloud"]
+        },
 
-    if "python" in text:
-        tech_stack.append("Python")
+        "python": {
+            "tech_stack": ["Python"]
+        },
 
-    if "testing" in text:
-        pain_points.append("Manual testing effort")
-        solution.append("Automated testing tools")
+        "testing": {
+            "pain_points": ["Manual testing effort"],
+            "solution": ["Automated testing tools"]
+        },
 
-    if "automation" in text:
-        outcome.append("Process automation")
+        "automation": {
+            "outcome": ["Process automation"]
+        },
 
-    if "legacy" in text:
-        pain_points.append("Legacy system limitations")
-        solution.append("Modern low-code platform")
+        "legacy": {
+            "pain_points": ["Legacy system limitations"],
+            "solution": ["Modern low-code platform"]
+        }
+    }
 
+    # apply AI rules
+    for keyword, value in rules.items():
+
+        if keyword in text:
+
+            pain_points.update(value.get("pain_points", []))
+            tech_stack.update(value.get("tech_stack", []))
+            outcome.update(value.get("outcome", []))
+            solution.update(value.get("solution", []))
+
+    # default solution
     if not solution:
-        solution.append("Custom AI-based solution")
+        solution.add("Custom AI-based solution")
+
+    return format_output(pain_points, tech_stack, outcome, solution)
+
+
+# Step 3: format output document
+def format_output(pain_points, tech_stack, outcome, solution):
 
     result = f"""
 AI Solution Design Document
 
 Pain Points:
-- {chr(10).join(set(pain_points))}
+- {chr(10).join(pain_points)}
 
 Current Tech Stack:
-- {chr(10).join(set(tech_stack))}
+- {chr(10).join(tech_stack)}
 
 Desired Outcome:
-- {chr(10).join(set(outcome))}
+- {chr(10).join(outcome)}
 
 Suggested Solution Architecture:
-- {chr(10).join(set(solution))}
+- {chr(10).join(solution)}
 
 Implementation Steps:
 1. Requirement Analysis
@@ -76,13 +105,15 @@ Implementation Steps:
     return result
 
 
-transcript = read_transcript("meeting1.txt")
+# Step 4: run complete AI agent
+transcript = read_transcript("meeting2.txt")
 
 response = analyze_transcript(transcript)
 
 print(response)
 
 
+# Step 5: save output file
 with open("solution_design.txt", "w", encoding="utf-8") as f:
     f.write(response)
 
